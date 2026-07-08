@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7月 給食よてい献立</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Kiwi+Maru:wght@400;500&display=swap');
+
+  :root{
+    --sky:#4FA8D8;
+    --sea:#1C6E8C;
+    --sand:#FCEEC8;
+    --sun:#F2A93B;
+    --melon:#EE6C6C;
+    --leaf:#5FA777;
+    --ink:#2B3A42;
+    --paper:#FFFDF7;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Kiwi Maru', serif;
+    background:linear-gradient(180deg,var(--sky) 0%, var(--sky) 180px, var(--paper) 180px);
+    color:var(--ink);
+  }
+  h1,h2,h3,.brand{font-family:'Zen Maru Gothic',sans-serif;}
+
+  header{
+    padding:40px 24px 70px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  header::before{
+    content:"";
+    position:absolute;
+    bottom:-1px; left:0; right:0;
+    height:60px;
+    background:var(--paper);
+    border-radius:50% 50% 0 0 / 100% 100% 0 0;
+  }
+  .wave{
+    position:absolute;
+    bottom:20px; left:0; right:0;
+    height:40px;
+    opacity:0.35;
+  }
+  .eyebrow{
+    color:#fff;
+    letter-spacing:0.35em;
+    font-size:12px;
+    font-weight:700;
+    opacity:0.9;
+  }
+  h1{
+    color:#fff;
+    font-size:clamp(28px,6vw,44px);
+    margin:10px 0 6px;
+    font-weight:900;
+    text-shadow:0 3px 0 rgba(0,0,0,0.08);
+  }
+  .sub{
+    color:#eaf6ff;
+    font-size:14px;
+    font-weight:500;
+  }
+
+  main{max-width:960px;margin:0 auto;padding:0 16px 60px;}
+
+  .today-card{
+    background:linear-gradient(135deg,#FFF6E0,var(--paper));
+    border:2px solid var(--sun);
+    border-radius:22px;
+    padding:24px 26px;
+    margin:14px 0 28px;
+    box-shadow:0 14px 30px rgba(242,169,59,0.18);
+    display:flex;
+    gap:20px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .today-card .badge{
+    background:var(--melon);
+    color:#fff;
+    font-weight:700;
+    font-size:12px;
+    padding:4px 14px;
+    border-radius:999px;
+    letter-spacing:0.1em;
+  }
+  .today-card .today-date{
+    font-family:'Zen Maru Gothic',sans-serif;
+    font-weight:900;
+    font-size:26px;
+    color:var(--sea);
+    margin:8px 0 4px;
+  }
+  .today-card .today-main{
+    font-size:15px;
+    font-weight:700;
+    line-height:1.6;
+  }
+  .today-card .today-kcal{
+    font-size:13px;
+    color:#8a7f6a;
+    margin-top:4px;
+  }
+  .today-card button{
+    background:var(--sea);
+    color:#fff;
+    border:none;
+    padding:9px 22px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:700;
+    font-family:'Zen Maru Gothic',sans-serif;
+    cursor:pointer;
+    margin-left:auto;
+  }
+  .today-card button:hover{background:var(--sky);}
+  .today-card.empty{
+    justify-content:center;
+    text-align:center;
+    color:#7a8a95;
+    font-weight:700;
+  }
+
+  .intro-card{
+    background:var(--paper);
+    border:2px solid #E9E2CC;
+    border-radius:20px;
+    padding:22px 24px;
+    margin:0 0 32px;
+    box-shadow:0 10px 24px rgba(28,110,140,0.08);
+  }
+  .intro-card h2{
+    margin:0 0 10px;
+    font-size:18px;
+    color:var(--sea);
+    display:flex; align-items:center; gap:8px;
+  }
+  .intro-card p{
+    margin:6px 0;
+    line-height:1.8;
+    font-size:14.5px;
+  }
+  .tag{
+    display:inline-block;
+    background:var(--leaf);
+    color:#fff;
+    border-radius:999px;
+    padding:2px 12px;
+    font-size:12px;
+    font-weight:700;
+    margin-right:6px;
+  }
+
+  .drink-card{
+    background:#fff;
+    border-radius:20px;
+    border:2px dashed var(--sun);
+    padding:20px 24px;
+    margin-bottom:32px;
+  }
+  .drink-card h2{margin:0 0 10px;font-size:17px;color:var(--sun);}
+  .drink-grid{display:flex;gap:24px;flex-wrap:wrap;font-size:14px;}
+  .drink-grid ul{margin:6px 0;padding-left:18px;line-height:1.9;}
+  .drink-note{font-size:12.5px;color:#7a6a4a;background:#FFF6E0;border-radius:10px;padding:8px 12px;margin-top:8px;}
+
+  .week-label{
+    font-family:'Zen Maru Gothic',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    color:var(--sea);
+    margin:28px 4px 10px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .week-label::after{content:"";flex:1;height:1px;background:#D9E7EC;}
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+    gap:12px;
+  }
+
+  .card{
+    background:#fff;
+    border-radius:16px;
+    padding:14px 14px 12px;
+    border:1px solid #EDEAE0;
+    box-shadow:0 4px 10px rgba(43,58,66,0.05);
+    cursor:pointer;
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+    position:relative;
+  }
+  .card:hover, .card:focus-visible{
+    transform:translateY(-3px);
+    box-shadow:0 10px 20px rgba(43,58,66,0.12);
+    outline:none;
+  }
+  .card.recycle::after{
+    content:"🌱産";
+    position:absolute;
+    top:10px; right:10px;
+    font-size:11px;
+    background:var(--leaf);
+    color:#fff;
+    padding:2px 7px;
+    border-radius:999px;
+  }
+  .date-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:6px;
+  }
+  .date-num{font-size:20px;font-weight:900;font-family:'Zen Maru Gothic',sans-serif;}
+  .dow{font-size:11px;font-weight:700;color:#fff;padding:1px 8px;border-radius:999px;}
+  .dow.mon{background:var(--melon);}
+  .dow.tue{background:var(--sun);}
+  .dow.wed{background:var(--leaf);}
+  .dow.thu{background:var(--sea);}
+  .dow.fri{background:#8E7BC7;}
+  .menu-main{font-size:13.5px;font-weight:700;line-height:1.5;margin:0 0 4px;}
+  .kcal{font-size:11.5px;color:#8a7f6a;}
+  .special{
+    background:linear-gradient(135deg,#EAF6FF,#fff);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;color:var(--sea);font-weight:700;font-size:14px;gap:4px;
+  }
+
+  .overlay{
+    position:fixed;inset:0;background:rgba(28,50,60,0.55);
+    display:none;align-items:center;justify-content:center;
+    padding:20px;z-index:50;
+  }
+  .overlay.show{display:flex;}
+  .modal{
+    background:var(--paper);
+    max-width:440px;width:100%;
+    border-radius:20px;
+    padding:26px 26px 22px;
+    max-height:85vh;overflow-y:auto;
+    box-shadow:0 20px 50px rgba(0,0,0,0.25);
+  }
+  .modal h3{margin:0 0 4px;font-size:20px;color:var(--sea);}
+  .modal .mkcal{font-size:13px;color:#8a7f6a;margin-bottom:14px;}
+  .modal .dish{
+    font-weight:700;font-size:15px;margin:10px 0 2px;
+    display:flex;align-items:center;gap:6px;
+  }
+  .modal .dish::before{content:"●";color:var(--sun);font-size:8px;}
+  .modal .ing{font-size:13px;color:#5a5248;line-height:1.7;margin:0 0 10px 14px;}
+  .close-btn{
+    display:block;margin:18px auto 0;
+    background:var(--sea);color:#fff;border:none;
+    padding:9px 26px;border-radius:999px;font-size:14px;font-weight:700;
+    font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;
+  }
+  .close-btn:hover{background:var(--sky);}
+
+  footer{
+    text-align:center;font-size:12px;color:#9a9284;
+    padding:20px 0 40px;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .card{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">SCHOOL LUNCH CALENDAR</div>
+  <h1>7月 よていこんだて</h1>
+  <div class="sub">豊明高等支援学校 給食だより</div>
+</header>
+
+<main>
+
+  <div class="today-card" id="todayCard"></div>
+
+  <div class="week-label">1週目</div>
+  <div class="grid" id="week1"></div>
+  <div class="week-label">2週目</div>
+  <div class="grid" id="week2"></div>
+  <div class="week-label">3週目</div>
+  <div class="grid" id="week3"></div>
+  <div class="week-label">4週目</div>
+  <div class="grid" id="week4"></div>
+
+  <div class="intro-card">
+    <h2>🌾 さっぽろ学校給食フードリサイクル</h2>
+    <p>札幌市では、学校給食の調理くずや生ごみを回収して堆肥化し、農家さんがその堆肥を使って栽培した作物を、学校給食の食材として提供しています。この活動を通し、食育・環境教育の充実を図っています。</p>
+    <p>フードリサイクルは北区の農家さんが協力してくださっており、今月は <span class="tag">レタス</span><span class="tag">チンゲン菜</span> が登場します。6日（月）は「レタス入り焼豚チャーハン」、16日（木）は「チンゲン菜のスープ」で使用予定です。カードの🌱マークが目印です。</p>
+  </div>
+
+  <div class="drink-card">
+    <h2>🍋 手作りスポーツドリンク</h2>
+    <div class="drink-grid">
+      <ul>
+        <li>水&nbsp;&nbsp;1L</li>
+        <li>レモン汁&nbsp;&nbsp;大さじ1</li>
+        <li>砂糖&nbsp;&nbsp;大さじ4〜6（はちみつなら大さじ3程度）</li>
+        <li>塩&nbsp;&nbsp;小さじ1/2</li>
+      </ul>
+      <div style="flex:1;min-width:180px;">
+        <p style="font-size:13.5px;line-height:1.8;margin:6px 0;">少量のお湯（分量外）で砂糖・塩をしっかり溶かし、溶けたら水とレモン汁を混ぜ合わせます。</p>
+        <div class="drink-note">※1歳未満の乳児にははちみつを与えないでください</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>タップして詳しい献立と材料をチェック</footer>
+
+<div class="overlay" id="overlay">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<script>
+const DOW = ['','mon','tue','wed','thu','fri'];
+const DOWJ = ['','月','火','水','木','金'];
+
+const data = [
+ {d:1,dow:2,kcal:834,main:"ロールパン／あさりのチャウダー／フライドチキン／コールスローサラダ",
+   dishes:[
+     ["ロールパン","小麦粉・バター・砂糖・牛乳・全卵など"],
+     ["あさりのチャウダー","あさり・ベーコン・じゃがいも・玉ねぎ・にんじん・パセリ・牛乳・豆乳・スキムミルク・シュレッドチーズ・鶏がらスープ"],
+     ["フライドチキン","鶏もも肉・パプリカ・ナツメグ・にんにく・牛乳・小麦粉・片栗粉・なたね油"],
+     ["コールスローサラダ","キャベツ・にんじん・ホールコーン・サラダ油・からし"]
+   ]},
+ {d:2,dow:3,kcal:764,main:"ご飯／カレー肉じゃが／揚げぎょうざ／のりの佃煮",
+   dishes:[
+     ["ご飯","白飯"],
+     ["カレー肉じゃが","豚肩肉・じゃがいも・玉ねぎ・にんじん・しらたき・さやいんげん・干しいたけ・たもぎだけ・しょうが・サラダ油・カレー粉"],
+     ["揚げぎょうざ","ぎょうざ・なたね油"],
+     ["のりの佃煮","もみのり・ひじき・水あめ"]
+   ]},
+ {d:3,dow:4,kcal:733,main:"冷麦／さつまいもグラッセ／プラム",
+   dishes:[
+     ["冷麦","ソフト冷麦・油揚げ・干しいたけ・ほうれん草・長ねぎ"],
+     ["さつまいもグラッセ","さつまいも・バター・牛乳"],
+     ["プラム","プラム"]
+   ]},
+ {d:6,dow:1,kcal:782,main:"レタス入り焼豚チャーハン／ちくわチーズつめ揚げ／フルーツミックス",recycle:true,
+   dishes:[
+     ["レタス入り焼豚チャーハン","胚芽米・大麦・レタス（札幌産）・豚肩肉・長ねぎ・しょうが・にんにく・にんじん・玉ねぎ・ホールコーン・干しいたけ・ごま油"],
+     ["ちくわチーズつめ揚げ","白ちくわ・チーズ・小麦粉・全卵・なたね油"],
+     ["フルーツミックス","みかん缶・パイン缶・黄桃缶・洋なし缶・なつみかん缶"]
+   ]},
+ {d:7,dow:2,kcal:847,main:"和風そぼろごはん／味噌汁／星のコロッケ",
+   dishes:[
+     ["和風そぼろごはん","白飯・鶏ひき肉・焼き豆腐・切り干し大根・干しいたけ・白ごま・しょうが・ごぼう・にんじん・味噌・油揚げ・ひじき・唐辛子・サラダ油"],
+     ["味噌汁","厚揚げ・小松菜・味噌"],
+     ["星のコロッケ","星のコロッケ・なたね油"]
+   ]},
+ {d:8,dow:3,kcal:744,main:"背割コッペ／コーンクリームスープ／セルフドック／パイン缶",
+   dishes:[
+     ["セルフドック","背割コッペ・ホールコーン・クリームコーン・ベーコン・玉ねぎ・にんじん・パセリ・小麦粉・バター・サラダ油・牛乳・豆乳・スキムミルク・シュレッドチーズ・鶏がらスープ／ポークウインナー・ケチャップ・ウスターソース・からし"],
+     ["パイン缶","パイン缶"]
+   ]},
+ {d:9,dow:4,kcal:771,main:"ご飯／豚汁／白身魚フライ／おかかふりかけ",
+   dishes:[
+     ["ご飯","白飯"],
+     ["豚汁","豚肩肉・豆腐・じゃがいも・板こんにゃく・にんじん・大根・玉ねぎ・ごぼう・長ねぎ・しょうが・サラダ油・味噌・唐辛子"],
+     ["白身魚フライ","白身魚フライ・なたね油"],
+     ["おかかふりかけ","しらす干し・糸かつお・切りのり・白ごま"]
+   ]},
+ {d:10,dow:5,kcal:835,main:"ミートとズッキーニのスパゲティ／スパイシーポテト／アイスクリーム",
+   dishes:[
+     ["ミートとズッキーニのスパゲティ","スパゲティ・オリーブ油・サラダ油・パセリ・豚ひき肉・玉ねぎ・にんじん・大豆水煮・マッシュルーム・セロリ・にんにく・ズッキーニ・小麦粉・カレー粉・ケチャップ・トマトピューレ・デミグラスソース・ウスターソース・中濃ソース・鶏がらスープ"],
+     ["スパイシーポテト","フレンチポテト・なたね油・パセリ・カレー粉・チリパウダー・ナツメグ"],
+     ["アイスクリーム","アイスクリーム"]
+   ]},
+
+ {d:13,dow:1,kcal:721,main:"わかめごはん／さつま汁／豆腐ハンバーグ／ミニトマト",
+   dishes:[
+     ["わかめごはん","胚芽米・大麦・炊き込みわかめ・白ごま"],
+     ["さつま汁","豚肩肉・さつまいも・豆腐・板こんにゃく・にんじん・大根・ごぼう・長ねぎ・しょうが・サラダ油・味噌・唐辛子"],
+     ["豆腐ハンバーグ","国産大豆豆腐ハンバーグ・片栗粉"],
+     ["ミニトマト","ミニトマト"]
+   ]},
+ {d:14,dow:2,kcal:820,main:"ご飯／豆腐のカレーソース／揚げポークシュウマイ／たたききゅうり",
+   dishes:[
+     ["ご飯","白飯"],
+     ["豆腐のカレーソース","豆腐・豚ひき肉・玉ねぎ・にんじん・セロリ・しょうが・にんにく・グリンピース・りんご・サラダ油・小麦粉・カレー粉・カレールウ・ケチャップ・ウスターソース・鶏がらスープ"],
+     ["揚げポークシュウマイ","ポークシュウマイ・なたね油"],
+     ["たたききゅうり","きゅうり・ごま油・白ごま"]
+   ]},
+ {d:15,dow:3,kcal:728,main:"揚げパン／麦入り野菜スープ／ラーメンサラダ",
+   dishes:[
+     ["揚げパン","ソフトフランス・なたね油・グラニュー糖・シナモン"],
+     ["麦入り野菜スープ","ベーコン・にんじん・玉ねぎ・キャベツ・セロリ・パセリ・大麦・鶏がらスープ"],
+     ["ラーメンサラダ","生ラーメン・ハム・きゅうり・もやし・ホールコーン・にんじん・ごま油・からし・白ごま"]
+   ]},
+ {d:16,dow:4,kcal:761,main:"スタミナ丼／チンゲン菜のスープ／黄桃缶",recycle:true,
+   dishes:[
+     ["スタミナ丼","白飯・豚肩肉・メンマ・にんじん・サラダ油・もやし・にら・玉ねぎ・りんご・ウスターソース・しょうが・にんにく・トウバンジャン・片栗粉・ごま油・白ごま"],
+     ["チンゲン菜のスープ","ベーコン・チンゲン菜（札幌産）・緑豆春雨・ホールコーン・鶏がらスープ"],
+     ["黄桃缶","黄桃缶"]
+   ]},
+ {d:17,dow:5,kcal:757,main:"冷やしきつねうどん／おさつフリッター／すいか",
+   dishes:[
+     ["冷やしきつねうどん","ソフトうどん・油揚げ・干しいたけ・ほうれん草・長ねぎ・唐辛子"],
+     ["おさつフリッター","さつまいも・小麦粉・ベーキングパウダー・全卵・牛乳・黒ごま・なたね油"],
+     ["すいか","すいか"]
+   ]},
+
+ {d:20,dow:1,special:"海の日", note:"祝日のため給食はお休みです"},
+ {d:21,dow:2,kcal:820,main:"ご飯／ベーコンシチュー／ぎょうざ／おひたし",
+   dishes:[
+     ["ご飯","白飯"],
+     ["ベーコンシチュー","ベーコン・じゃがいも・玉ねぎ・にんじん・パセリ・小麦粉・バター・サラダ油・牛乳・豆乳・シュレッドチーズ・スキムミルク・鶏がらスープ"],
+     ["ぎょうざ","ぎょうざ・なたね油"],
+     ["おひたし","小松菜・もやし・サラダ油・白ごま"]
+   ]},
+ {d:22,dow:3,kcal:882,main:"コッペパン／十勝大豆コロッケ／あさりのスパゲティサラダ",
+   dishes:[
+     ["十勝大豆コロッケ","十勝大豆コロッケ・なたね油"],
+     ["あさりのスパゲティサラダ","あさり・しょうが・スパゲティ・きゅうり・にんじん・サラダ油・味噌・ごま油・白ごま"]
+   ]},
+ {d:23,dow:4,kcal:815,main:"カレーライス／小松菜とベーコンのサラダ／冷凍みかん",
+   dishes:[
+     ["カレーライス","白飯・鶏もも肉・カレー粉・じゃがいも・にんじん・玉ねぎ・セロリ・りんご・しょうが・にんにく・グリンピース・サラダ油・小麦粉・カレールウ・ウスターソース・ケチャップ・鶏がらスープ"],
+     ["小松菜とベーコンのサラダ","ベーコン・小松菜・もやし・サラダ油・白ごま"],
+     ["冷凍みかん","冷凍みかん"]
+   ]},
+ {d:24,dow:5,special:"終業式", note:"1学期最終日です"},
+];
+
+function cardHtml(item){
+  if(item.special){
+    return `<div class="card special" tabindex="0" data-static="1">
+      <div style="font-size:22px;">${item.d===20?'🌊':'📗'}</div>
+      <div>${item.special}</div>
+      <div style="font-size:11px;font-weight:500;color:#7a8a95;">${item.note}</div>
+    </div>`;
+  }
+  return `<div class="card ${item.recycle?'recycle':''}" tabindex="0" data-day="${item.d}">
+    <div class="date-row">
+      <span class="date-num">${item.d}</span>
+      <span class="dow ${DOW[item.dow]}">${DOWJ[item.dow]}</span>
+    </div>
+    <p class="menu-main">${item.main.split('／')[0]}</p>
+    <div class="kcal">${item.kcal}kcal</div>
+  </div>`;
+}
+
+function place(){
+  const weeks = {week1:[1,2,3,6,7,8,9,10], week2:[13,14,15,16,17], week3:[20,21,22,23,24], week4:[]};
+  for(const [id,days] of Object.entries(weeks)){
+    const el = document.getElementById(id);
+    if(!el) continue;
+    let html = '';
+    days.forEach(dnum=>{
+      const item = data.find(x=>x.d===dnum);
+      if(item) html += cardHtml(item);
+    });
+    el.innerHTML = html;
+    if(!html){
+      el.previousElementSibling?.remove();
+      el.remove();
+    }
+  }
+}
+place();
+
+function showToday(){
+  const el = document.getElementById('todayCard');
+  const now = new Date();
+  const isJuly = now.getMonth() === 6;
+  const todayItem = isJuly ? data.find(x=>x.d===now.getDate()) : null;
+
+  if(!todayItem){
+    el.classList.add('empty');
+    el.innerHTML = `<div>📭 本日は7月のよていこんだてに献立がありません</div>`;
+    return;
+  }
+
+  if(todayItem.special){
+    el.innerHTML = `
+      <div>
+        <span class="badge">TODAY</span>
+        <div class="today-date">7月${todayItem.d}日（${DOWJ[todayItem.dow]}）</div>
+        <div class="today-main">${todayItem.special}／${todayItem.note}</div>
+      </div>
+    `;
+    return;
+  }
+
+  el.innerHTML = `
+    <div>
+      <span class="badge">TODAY</span>
+      <div class="today-date">7月${todayItem.d}日（${DOWJ[todayItem.dow]}）</div>
+      <div class="today-main">${todayItem.main}</div>
+      <div class="today-kcal">${todayItem.kcal}kcal</div>
+    </div>
+    <button id="todayBtn">くわしく見る</button>
+  `;
+  document.getElementById('todayBtn').onclick = ()=>openModal(todayItem);
+}
+showToday();
+
+const overlay = document.getElementById('overlay');
+const modalContent = document.getElementById('modalContent');
+
+function openModal(item){
+  let dishesHtml = item.dishes.map(([name,ing])=>`
+    <div class="dish">${name}</div>
+    <div class="ing">${ing}</div>
+  `).join('');
+  modalContent.innerHTML = `
+    <h3>7月${item.d}日（${DOWJ[item.dow]}）</h3>
+    <div class="mkcal">${item.kcal}kcal</div>
+    ${dishesHtml}
+    <button class="close-btn" id="closeBtn">とじる</button>
+  `;
+  overlay.classList.add('show');
+  document.getElementById('closeBtn').onclick = closeModal;
+}
+function closeModal(){ overlay.classList.remove('show'); }
+overlay.addEventListener('click', e=>{ if(e.target===overlay) closeModal(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+
+document.querySelectorAll('.card[data-day]').forEach(card=>{
+  const item = data.find(x=>x.d===Number(card.dataset.day));
+  card.addEventListener('click', ()=>openModal(item));
+  card.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();openModal(item);} });
+});
+</script>
+
+</body>
+</html>
