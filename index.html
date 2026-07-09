@@ -4,9 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>給食だより</title>
+<link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Kiwi+Maru:wght@400;500&display=swap');
-
   :root{
     --sky:#4FA8D8;
     --sea:#1C6E8C;
@@ -20,11 +19,12 @@
   *{box-sizing:border-box;}
   body{
     margin:0;
-    font-family:'Kiwi Maru', serif;
+    font-family:'BIZ UDPGothic', sans-serif;
+    line-height:1.5;
     background:linear-gradient(180deg,var(--sky) 0%, var(--sky) 180px, var(--paper) 180px);
     color:var(--ink);
   }
-  h1,h2,h3,.brand{font-family:'Zen Maru Gothic',sans-serif;}
+  h1,h2,h3,.brand{font-family:'BIZ UDPGothic', sans-serif;}
 
   header{
     padding:40px 24px 70px;
@@ -90,7 +90,7 @@
     letter-spacing:0.1em;
   }
   .today-card .today-date{
-    font-family:'Zen Maru Gothic',sans-serif;
+    font-family:'BIZ UDPGothic', sans-serif;
     font-weight:900;
     font-size:26px;
     color:var(--sea);
@@ -99,7 +99,7 @@
   .today-card .today-main{
     font-size:15px;
     font-weight:700;
-    line-height:1.6;
+    line-height:1.5;
   }
   .today-card .today-kcal{
     font-size:13px;
@@ -114,7 +114,7 @@
     border-radius:999px;
     font-size:13px;
     font-weight:700;
-    font-family:'Zen Maru Gothic',sans-serif;
+    font-family:'BIZ UDPGothic', sans-serif;
     cursor:pointer;
     margin-left:auto;
   }
@@ -142,7 +142,7 @@
   }
   .intro-card p{
     margin:6px 0;
-    line-height:1.8;
+    line-height:1.5;
     font-size:14.5px;
   }
   .tag{
@@ -165,11 +165,11 @@
   }
   .drink-card h2{margin:0 0 10px;font-size:17px;color:var(--sun);}
   .drink-grid{display:flex;gap:24px;flex-wrap:wrap;font-size:14px;}
-  .drink-grid ul{margin:6px 0;padding-left:18px;line-height:1.9;}
+  .drink-grid ul{margin:6px 0;padding-left:18px;line-height:1.5;}
   .drink-note{font-size:12.5px;color:#7a6a4a;background:#FFF6E0;border-radius:10px;padding:8px 12px;margin-top:8px;}
 
   .week-label{
-    font-family:'Zen Maru Gothic',sans-serif;
+    font-family:'BIZ UDPGothic', sans-serif;
     font-weight:700;
     font-size:13px;
     color:var(--sea);
@@ -205,7 +205,7 @@
     align-items:baseline;
     margin-bottom:6px;
   }
-  .date-num{font-size:20px;font-weight:900;font-family:'Zen Maru Gothic',sans-serif;}
+  .date-num{font-size:20px;font-weight:900;font-family:'BIZ UDPGothic', sans-serif;}
   .dow{font-size:11px;font-weight:700;color:#fff;padding:1px 8px;border-radius:999px;}
   .dow.mon{background:var(--melon);}
   .dow.tue{background:var(--sun);}
@@ -240,12 +240,12 @@
     display:flex;align-items:center;gap:6px;
   }
   .modal .dish::before{content:"●";color:var(--sun);font-size:8px;}
-  .modal .ing{font-size:13px;color:#5a5248;line-height:1.7;margin:0 0 10px 14px;}
+  .modal .ing{font-size:13px;color:#5a5248;line-height:1.5;margin:0 0 10px 14px;}
   .close-btn{
     display:block;margin:18px auto 0;
     background:var(--sea);color:#fff;border:none;
     padding:9px 26px;border-radius:999px;font-size:14px;font-weight:700;
-    font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;
+    font-family:'BIZ UDPGothic', sans-serif;cursor:pointer;
   }
   .close-btn:hover{background:var(--sky);}
 
@@ -256,6 +256,35 @@
 
   @media (prefers-reduced-motion:reduce){
     .card{transition:none;}
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root{
+      --sky:#1F4A63;
+      --sea:#5FB8E0;
+      --sand:#3A3527;
+      --sun:#F2A93B;
+      --melon:#D9534F;
+      --leaf:#4C8A63;
+      --ink:#EAEAE0;
+      --paper:#1B1F22;
+    }
+    body{background:linear-gradient(180deg,var(--sky) 0%, var(--sky) 180px, var(--paper) 180px);}
+    .today-card{background:linear-gradient(135deg,#2A2416,var(--paper));box-shadow:0 14px 30px rgba(0,0,0,0.4);}
+    .today-card .today-kcal{color:#c9bfa8;}
+    .today-card.empty{color:#9fb0ba;}
+    .intro-card{background:var(--paper);border-color:#3A3527;box-shadow:0 10px 24px rgba(0,0,0,0.3);}
+    .drink-card{background:#222629;}
+    .drink-note{color:#e0d3ad;background:#3A3527;}
+    .week-label::after{background:#2C3A40;}
+    .card{background:#222629;border-color:#33383c;box-shadow:0 4px 10px rgba(0,0,0,0.3);}
+    .card:hover, .card:focus-visible{box-shadow:0 10px 20px rgba(0,0,0,0.4);}
+    .kcal{color:#c9bfa8;}
+    .special{background:linear-gradient(135deg,#1E2C33,#222629);}
+    .modal{background:var(--paper);box-shadow:0 20px 50px rgba(0,0,0,0.5);}
+    .modal .mkcal{color:#c9bfa8;}
+    .modal .ing{color:#b8b1a3;}
+    footer{color:#8a8478;}
   }
 </style>
 </head>
@@ -296,7 +325,7 @@
         <li>塩&nbsp;&nbsp;小さじ1/2</li>
       </ul>
       <div style="flex:1;min-width:180px;">
-        <p style="font-size:13.5px;line-height:1.8;margin:6px 0;">少量のお湯（分量外）で砂糖・塩をしっかり溶かし、溶けたら水とレモン汁を混ぜ合わせます。</p>
+        <p style="font-size:13.5px;line-height:1.5;margin:6px 0;">少量のお湯（分量外）で砂糖・塩をしっかり溶かし、溶けたら水とレモン汁を混ぜ合わせます。</p>
         <div class="drink-note">※1歳未満の乳児にははちみつを与えないでください</div>
       </div>
     </div>
