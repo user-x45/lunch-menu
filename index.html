@@ -131,7 +131,7 @@
     border:2px solid #E9E2CC;
     border-radius:20px;
     padding:22px 24px;
-    margin:0 0 32px;
+    margin:36px 0 32px;
     box-shadow:0 10px 24px rgba(28,110,140,0.08);
   }
   .intro-card h2{
@@ -199,16 +199,6 @@
     box-shadow:0 10px 20px rgba(43,58,66,0.12);
     outline:none;
   }
-  .card.recycle::after{
-    content:"🌱産";
-    position:absolute;
-    top:10px; right:10px;
-    font-size:11px;
-    background:var(--leaf);
-    color:#fff;
-    padding:2px 7px;
-    border-radius:999px;
-  }
   .date-row{
     display:flex;
     justify-content:space-between;
@@ -226,8 +216,7 @@
   .kcal{font-size:11.5px;color:#8a7f6a;}
   .special{
     background:linear-gradient(135deg,#EAF6FF,#fff);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;color:var(--sea);font-weight:700;font-size:14px;gap:4px;
+    color:var(--sea);
   }
 
   .overlay{
@@ -294,7 +283,7 @@
   <div class="intro-card">
     <h2>🌾 さっぽろ学校給食フードリサイクル</h2>
     <p>札幌市では、学校給食の調理くずや生ごみを回収して堆肥化し、農家さんがその堆肥を使って栽培した作物を、学校給食の食材として提供しています。この活動を通し、食育・環境教育の充実を図っています。</p>
-    <p>フードリサイクルは北区の農家さんが協力してくださっており、今月は <span class="tag">レタス</span><span class="tag">チンゲン菜</span> が登場します。6日（月）は「レタス入り焼豚チャーハン」、16日（木）は「チンゲン菜のスープ」で使用予定です。カードの🌱マークが目印です。</p>
+    <p>フードリサイクルは北区の農家さんが協力してくださっており、今月は <span class="tag">レタス</span><span class="tag">チンゲン菜</span> が登場します。6日（月）は「レタス入り焼豚チャーハン」、16日（木）は「チンゲン菜のスープ」で使用予定です。</p>
   </div>
 
   <div class="drink-card">
@@ -346,7 +335,7 @@ const data = [
      ["さつまいもグラッセ","さつまいも・バター・牛乳"],
      ["プラム","プラム"]
    ]},
- {d:6,dow:1,kcal:782,main:"レタス入り焼豚チャーハン／ちくわチーズつめ揚げ／フルーツミックス",recycle:true,
+ {d:6,dow:1,kcal:782,main:"レタス入り焼豚チャーハン／ちくわチーズつめ揚げ／フルーツミックス",
    dishes:[
      ["レタス入り焼豚チャーハン","胚芽米・大麦・レタス（札幌産）・豚肩肉・長ねぎ・しょうが・にんにく・にんじん・玉ねぎ・ホールコーン・干しいたけ・ごま油"],
      ["ちくわチーズつめ揚げ","白ちくわ・チーズ・小麦粉・全卵・なたね油"],
@@ -397,7 +386,7 @@ const data = [
      ["麦入り野菜スープ","ベーコン・にんじん・玉ねぎ・キャベツ・セロリ・パセリ・大麦・鶏がらスープ"],
      ["ラーメンサラダ","生ラーメン・ハム・きゅうり・もやし・ホールコーン・にんじん・ごま油・からし・白ごま"]
    ]},
- {d:16,dow:4,kcal:761,main:"スタミナ丼／チンゲン菜のスープ／黄桃缶",recycle:true,
+ {d:16,dow:4,kcal:761,main:"スタミナ丼／チンゲン菜のスープ／黄桃缶",
    dishes:[
      ["スタミナ丼","白飯・豚肩肉・メンマ・にんじん・サラダ油・もやし・にら・玉ねぎ・りんご・ウスターソース・しょうが・にんにく・トウバンジャン・片栗粉・ごま油・白ごま"],
      ["チンゲン菜のスープ","ベーコン・チンゲン菜（札幌産）・緑豆春雨・ホールコーン・鶏がらスープ"],
@@ -435,12 +424,15 @@ const data = [
 function cardHtml(item){
   if(item.special){
     return `<div class="card special" tabindex="0" data-static="1">
-      <div style="font-size:22px;">${item.d===20?'🌊':'📗'}</div>
-      <div>${item.special}</div>
-      <div style="font-size:11px;font-weight:500;color:#7a8a95;">${item.note}</div>
+      <div class="date-row">
+        <span class="date-num">${item.d}</span>
+        <span class="dow ${DOW[item.dow]}">${DOWJ[item.dow]}</span>
+      </div>
+      <p class="menu-main">${item.d===20?'🌊 ':'📗 '}${item.special}</p>
+      <div class="kcal">${item.note}</div>
     </div>`;
   }
-  return `<div class="card ${item.recycle?'recycle':''}" tabindex="0" data-day="${item.d}">
+  return `<div class="card" tabindex="0" data-day="${item.d}">
     <div class="date-row">
       <span class="date-num">${item.d}</span>
       <span class="dow ${DOW[item.dow]}">${DOWJ[item.dow]}</span>
@@ -472,21 +464,25 @@ place();
 function showToday(){
   const el = document.getElementById('todayCard');
   const now = new Date();
-  const isJuly = now.getMonth() === 6;
-  const todayItem = isJuly ? data.find(x=>x.d===now.getDate()) : null;
+  const isAfterNoon = now.getHours() >= 13;
+  const targetDate = new Date(now);
+  if(isAfterNoon) targetDate.setDate(targetDate.getDate() + 1);
+  const isJuly = targetDate.getMonth() === 6;
+  const targetItem = isJuly ? data.find(x=>x.d===targetDate.getDate()) : null;
+  const badgeLabel = isAfterNoon ? 'TOMORROW' : 'TODAY';
 
-  if(!todayItem){
+  if(!targetItem){
     el.classList.add('empty');
-    el.innerHTML = `<div>📭 本日は7月のよていこんだてに献立がありません</div>`;
+    el.innerHTML = `<div>📭 ${isAfterNoon ? '明日' : '本日'}は7月のよていこんだてに献立がありません</div>`;
     return;
   }
 
-  if(todayItem.special){
+  if(targetItem.special){
     el.innerHTML = `
       <div>
-        <span class="badge">TODAY</span>
-        <div class="today-date">7月${todayItem.d}日（${DOWJ[todayItem.dow]}）</div>
-        <div class="today-main">${todayItem.special}／${todayItem.note}</div>
+        <span class="badge">${badgeLabel}</span>
+        <div class="today-date">7月${targetItem.d}日（${DOWJ[targetItem.dow]}）</div>
+        <div class="today-main">${targetItem.special}／${targetItem.note}</div>
       </div>
     `;
     return;
@@ -494,14 +490,14 @@ function showToday(){
 
   el.innerHTML = `
     <div>
-      <span class="badge">TODAY</span>
-      <div class="today-date">7月${todayItem.d}日（${DOWJ[todayItem.dow]}）</div>
-      <div class="today-main">${todayItem.main}</div>
-      <div class="today-kcal">${todayItem.kcal}kcal</div>
+      <span class="badge">${badgeLabel}</span>
+      <div class="today-date">7月${targetItem.d}日（${DOWJ[targetItem.dow]}）</div>
+      <div class="today-main">${targetItem.main}</div>
+      <div class="today-kcal">${targetItem.kcal}kcal</div>
     </div>
     <button id="todayBtn">くわしく見る</button>
   `;
-  document.getElementById('todayBtn').onclick = ()=>openModal(todayItem);
+  document.getElementById('todayBtn').onclick = ()=>openModal(targetItem);
 }
 showToday();
 
