@@ -500,20 +500,30 @@ function showToday(){
   const isAfterNoon = now.getHours() >= 13;
   const targetDate = new Date(now);
   if(isAfterNoon) targetDate.setDate(targetDate.getDate() + 1);
-  const isJuly = targetDate.getMonth() === 6;
-  const targetItem = isJuly ? data.find(x=>x.d===targetDate.getDate()) : null;
   const badgeLabel = isAfterNoon ? 'TOMORROW' : 'TODAY';
 
+  let targetDayNum;
+  if(targetDate.getMonth() < 6) targetDayNum = 0;
+  else if(targetDate.getMonth() > 6) targetDayNum = 32;
+  else targetDayNum = targetDate.getDate();
+
+  const upcoming = data.filter(item=>item.d>=targetDayNum);
+  const targetItem = upcoming.length ? upcoming.reduce((nearest,item)=>
+    item.d<nearest.d ? item : nearest
+  ) : null;
+
   if(!targetItem){
-    el.classList.add('empty');
-    el.innerHTML = `<div>📭 ${isAfterNoon ? '明日' : '本日'}は7月のよていこんだてに献立がありません</div>`;
+    el.remove();
     return;
   }
+
+  const isExactMatch = targetItem.d === targetDayNum;
+  const badgeHtml = isExactMatch ? `<span class="badge">${badgeLabel}</span>` : '';
 
   if(targetItem.special){
     el.innerHTML = `
       <div>
-        <span class="badge">${badgeLabel}</span>
+        ${badgeHtml}
         <div class="today-date">7月${targetItem.d}日（${DOWJ[targetItem.dow]}）</div>
         <div class="today-main">${targetItem.special}／${targetItem.note}</div>
       </div>
@@ -523,7 +533,7 @@ function showToday(){
 
   el.innerHTML = `
     <div>
-      <span class="badge">${badgeLabel}</span>
+      ${badgeHtml}
       <div class="today-date">7月${targetItem.d}日（${DOWJ[targetItem.dow]}）</div>
       <div class="today-main">${targetItem.main}</div>
       <div class="today-kcal">${targetItem.kcal}kcal</div>
